@@ -8,7 +8,7 @@ import { Assignment } from './assignment.model';
 })
 export class AssignmentsComponent {
   titre = 'Mon application sur les assignments !'
-  selectedAssignment!: Assignment;
+  selectedAssignment!: Assignment | any;
   assignments:Assignment[] = [
     {
       nom: "TP de Java",
@@ -40,5 +40,10 @@ export class AssignmentsComponent {
   onNewAssignment(event:Assignment){
     this.assignments.push(event);
     this.addAssignmentVisible = false;
+  }
+
+  onAssignmentDelete(event:Assignment){
+    this.assignments = this.assignments.filter((a) => a.nom !== event.nom);
+    this.selectedAssignment = undefined;
   }
 }
