@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 
 @Component({
@@ -7,15 +8,20 @@ import { Assignment } from '../assignment.model';
   styleUrls: ['./assignment-detail.component.css']
 })
 export class AssignmentDetailComponent implements OnInit {
-  @Input() selectedAssignment!: Assignment;
+  @Input() selectedAssignment!: Assignment | any;
   @Output() assignmentToDelete = new EventEmitter<Assignment>();
 
-  constructor() { }
+  constructor(private assignmentsService: AssignmentsService) { }
 
   ngOnInit(): void {
   }
 
+  onUpdateAssignment(){
+    this.assignmentsService.updateAssignment(this.selectedAssignment);
+  }
+
   onDeleteAssignment(){
-    this.assignmentToDelete.emit(this.selectedAssignment);
+    this.assignmentsService.deleteAssignment(this.selectedAssignment);
+    this.selectedAssignment = undefined;
   }
 }

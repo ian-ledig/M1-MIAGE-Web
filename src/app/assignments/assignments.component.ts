@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
 
 @Component({
@@ -6,28 +7,20 @@ import { Assignment } from './assignment.model';
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.css']
 })
-export class AssignmentsComponent {
+export class AssignmentsComponent implements OnInit{
   titre = 'Mon application sur les assignments !'
   selectedAssignment!: Assignment | any;
-  assignments:Assignment[] = [
-    {
-      nom: "TP de Java",
-      dateDeRendu: new Date("2021-03-01"),
-      rendu: true
-    }, {
-      nom: "TP de React",
-      dateDeRendu: new Date("2021-09-28"),
-      rendu: false
-    }, {
-      nom: "TP d'Angular",
-      dateDeRendu: new Date("2021-09-22"),
-      rendu: true
-    },
-  ]
+  assignments: Assignment[] | undefined;
 
   addAssignmentVisible = false;
   
-  constructor() { }
+  constructor(private assignmentsService: AssignmentsService) { }
+
+  ngOnInit(): void {
+    this.assignmentsService.getAssignments().subscribe(assignments => {
+      this.assignments = assignments;
+    });
+  }
  
   assignmentClick(assignment: Assignment){
     this.selectedAssignment = assignment;
@@ -38,12 +31,11 @@ export class AssignmentsComponent {
   }
 
   onNewAssignment(event:Assignment){
-    this.assignments.push(event);
+    this.assignmentsService.addAssignment(event);
     this.addAssignmentVisible = false;
   }
 
   onAssignmentDelete(event:Assignment){
-    this.assignments = this.assignments.filter((a) => a.nom !== event.nom);
     this.selectedAssignment = undefined;
   }
 }

@@ -10,8 +10,8 @@
         <ng-template #nonsoumis>
             Le devoir {{selectedAssignment.nom}} n'a pas été rendu.
             <br>
-            <mat-checkbox [(ngModel)]="selectedAssignment.rendu" color="primary">Rendre</mat-checkbox>
+            <mat-checkbox class="panel-edit" (click)="onUpdateAssignment()" color="primary">Rendre</mat-checkbox>
         </ng-template>
-        <button mat-flat-button color="accent" (click)="onDeleteAssignment()">Supprimer</button>
+        <button class="panel-edit" mat-flat-button color="accent" (click)="onDeleteAssignment()">Supprimer</button>
     </mat-card-content>
 </mat-card>
