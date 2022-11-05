@@ -19,6 +19,32 @@ import { AssignmentDetailComponent } from './assignments/assignment-detail/assig
 import {MatCardModule} from '@angular/material/card'; 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
+import { RouterModule, Routes } from '@angular/router';
+import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+const routes : Routes = [
+  {
+    path: '',
+    component: AssignmentsComponent
+  },
+  {
+    path: 'home',
+    component: AssignmentsComponent
+  },
+  {
+    path: 'add',
+    component: AddAssignmentComponent
+  },
+  {
+    path: 'assignment/:id',
+    component: AssignmentDetailComponent
+  },
+  {
+    path: 'assignment/:id/edit',
+    component: EditAssignmentComponent
+  }
+];
 
 @NgModule({
   declarations: [
@@ -26,7 +52,8 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
     AssignmentsComponent,
     RenduDirective,
     AssignmentDetailComponent,
-    AddAssignmentComponent
+    AddAssignmentComponent,
+    EditAssignmentComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +69,9 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
     MatNativeDateModule,
     MatListModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

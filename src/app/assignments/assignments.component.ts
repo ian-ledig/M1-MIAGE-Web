@@ -27,13 +27,13 @@ export class AssignmentsComponent implements OnInit{
   }
 
   onAddAssignment(){
-      this.addAssignmentVisible = !this.addAssignmentVisible;
+      //this.addAssignmentVisible = !this.addAssignmentVisible;
   }
 
-  onNewAssignment(event:Assignment){
+  /*onNewAssignment(event:Assignment){
     this.assignmentsService.addAssignment(event);
     this.addAssignmentVisible = false;
-  }
+  }*/
 
   onAssignmentDelete(event:Assignment){
     this.selectedAssignment = undefined;

@@ -12,6 +12,13 @@
             <br>
             <mat-checkbox class="panel-edit" (click)="onUpdateAssignment()" color="primary">Rendre</mat-checkbox>
         </ng-template>
+
+        <nav><a (click)="onClickEdit()">
+            <button mat-stroked-button color="primary">
+                Edit
+            </button>
+        </a></nav>
+
         <button class="panel-edit" mat-flat-button color="accent" (click)="onDeleteAssignment()">Supprimer</button>
     </mat-card-content>
 </mat-card>
