@@ -1,6 +1,7 @@
-.rendu{
-  color: green;
+.container {
+  display:flex;
+  flex-direction: column;
 }
-.nonRendu{
-  color: red;
+.AjouterBtn {
+  align-self: flex-end;
 }

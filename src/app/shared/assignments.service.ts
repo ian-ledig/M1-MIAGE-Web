@@ -1,55 +1,46 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
+import { map, Observable, of } from 'rxjs';
 import { LoggingService } from './logging.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentsService {
-  url = "http://localhost:8010/api/assignments";
-  assignments:Assignment[] = [
-    {
-      id: 1,
-      nom: "TP de Java",
-      dateDeRendu: new Date("2021-03-01"),
-      rendu: true
-    }, {
-      id: 2,
-      nom: "TP de React",
-      dateDeRendu: new Date("2021-09-28"),
-      rendu: false
-    }, {
-      id: 3,
-      nom: "TP d'Angular",
-      dateDeRendu: new Date("2021-09-22"),
-      rendu: true
-    },
-  ]
+    private HttpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    url = "http://localhost:8010/api/assignments";
 
-  constructor(
-    private loggingService: LoggingService,
-    private http: HttpClient  
-  ) { }
+  constructor(private logginService:LoggingService, private http:HttpClient) { }
 
-  getAssignments(): Observable<Assignment[]>{
+  getAssignments():Observable<Assignment[]> {
     return this.http.get<Assignment[]>(this.url);
   }
 
-  addAssignment(assignment: Assignment): Observable<any>{
-    return this.http.post<Assignment>(this.url, assignment);
+  // renvoie comme Observable l'assignment dont l'id est passé
+  // en paramètre, ou undefined s'il n'existe pas
+  getAssignment(id:number):Observable<Assignment> {
+    return this.http.get<Assignment>(this.url + '/' + id)
+      .pipe(map(a => {
+        a.nom += " transformé avec un pipe...";
+        return a;
+      }));
   }
 
-  deleteAssignment(assignment: Assignment){
-    return this.http.delete(this.url + '/' + assignment.id);
+  addAssignment(assignment:Assignment):Observable<any> {
+    return this.http.post<Assignment>(this.url, assignment, this.HttpOptions);
   }
 
-  updateAssignment(assignment:Assignment): Observable<any> {
+  updateAssignment(assignment:Assignment):Observable<any> {
     return this.http.put<Assignment>(this.url, assignment);
   }
 
-  getAssignment(id: number) : Observable<Assignment> {
-    return this.http.get<Assignment>(this.url + "/" + id);
+  deleteAssignement(assignment:Assignment) :Observable<any> {
+    return this.http.delete(this.url + '/' + assignment._id);
   }
+
 }
