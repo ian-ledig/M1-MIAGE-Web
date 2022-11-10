@@ -43,4 +43,8 @@ export class AssignmentsService {
     return this.http.delete(this.url + '/' + assignment._id);
   }
 
+  getAssignmentsPagine(page: number, limit: number): Observable<any>{
+    return this.http.get(this.url, {params: {page: page.toString(), limit:limit.toString()}});
+  }
+
 }

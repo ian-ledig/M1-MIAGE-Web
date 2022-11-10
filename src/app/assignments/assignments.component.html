@@ -9,6 +9,12 @@
   </div>
 
   <h1>Liste des devoirs à rendre (assignments) :</h1>
+  <mat-paginator [length]="100"
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="pagineChanged($event)"
+               aria-label="Select page">
+  </mat-paginator>
   <mat-list *ngFor="let a of assignments">
     <nav><a routerLink="/assignment/{{a.id}}">
         <h3 mat-subheader>{{a.dateDeRendu|date}}</h3>
